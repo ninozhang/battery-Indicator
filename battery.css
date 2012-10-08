@@ -2,25 +2,25 @@ body {
     font-family: arial;
 }
 
-.level {
+.level, .status {
     position: absolute;
-    top: 210px;
-    left: 140px;
-    font-size: 30px;
     color: #fff;
     text-shadow: 0 0 2px black;
-    z-index: 6;
+    max-width: 100px;
+    z-index: 5;
+}
+
+.level {
+    top: 210px;
+    left: 130px;
+    font-size: 30px;
 }
 
 .status {
-    position: absolute;
     top: 242px;
-    left: 140px;
+    left: 130px;
     line-height: 16px;
     font-size: 13px;
-    color: #fff;
-    text-shadow: 0 0 2px black;
-    z-index: 5;
 }
 
 .indicator {
@@ -69,11 +69,14 @@ body {
     -webkit-transform: rotate(-90deg);
     -webkit-transform-origin: 54% 34%;
 }
+.rotate .level, .rotate .status {
+    max-width: 120px;
+}
 .rotate .level {
     top: 130px;
-    left: 240px;
+    left: 230px;
 }
 .rotate .status {
     top: 162px;
-    left: 240px;
+    left: 230px;
 }

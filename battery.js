@@ -31,7 +31,8 @@ function updateIndicator(level) {
 }
 
 /* 电池检测 */
-var lastCharging,
+var supportedBattery = false,
+    lastCharging,
     hold = true,
     lastLevel = 0,
     lastTime = 0;
@@ -39,9 +40,11 @@ var lastCharging,
 function updateCharging() {
     var charging = battery.charging,
         level = battery.level,
-        levelText = Math.floor(level * 100) + '%<br>',
+        levelText = Math.floor(level * 100) + '%',
         statusText;
-    if (charging && level === 1) {
+    if (!supportedBattery) {
+        statusText = '您的浏览器不支持电池电量检测<br>随机显示电量，与设备实际剩余电量无关';
+    } else if (charging && level === 1) {
         statusText = '电池已经充满';
     } else {
         statusText = (charging ? '充电中' : '放电中') + '<br>';
@@ -58,7 +61,7 @@ function updateCharging() {
                 lastLevel = level;
                 lastTime = new Date();
             }
-            statusText += '...';
+            statusText += '..';
         } else {
             var now = new Date(),
                 step = Math.abs((level - lastLevel) / ((now - lastTime) / 1000)),
@@ -78,6 +81,7 @@ function updateCharging() {
 }
  
 if (battery) {
+    supportedBattery = true;
     battery.addEventListener('chargingchange', updateCharging);
     battery.addEventListener('levelchange', updateCharging);
     battery.addEventListener('chargingtimechange', updateCharging);
