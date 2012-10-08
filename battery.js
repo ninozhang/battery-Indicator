@@ -33,13 +33,14 @@ function updateIndicator(level) {
 /* 电池检测 */
 var supportedBattery = false,
     lastCharging,
-    hold = true,
     lastLevel = 0,
     lastTime = 0;
 
 function updateCharging() {
     var charging = battery.charging,
         level = battery.level,
+        chargingTime = battery.chargingTime,
+        dischargingTime = battery.dischargingTime,
         levelText = Math.floor(level * 100) + '%',
         statusText;
     if (!supportedBattery) {
@@ -50,28 +51,27 @@ function updateCharging() {
         statusText = (charging ? '充电中' : '放电中') + '<br>';
         if (charging !== lastCharging) {
             lastCharging = charging;
-            hold = true;
             lastLevel = 0;
             lastTime = 0;
         }
-        if (lastLevel === 0 || lastLevel === level || hold) {
-            if (hold) {
-                hold = false;
-            } else {
-                lastLevel = level;
-                lastTime = new Date();
-            }
-            statusText += '..';
+        if (lastLevel === 0 || lastLevel === level) {
+            lastLevel = level;
+            lastTime = new Date();
+            statusText += '...';
         } else {
             var now = new Date(),
                 step = Math.abs((level - lastLevel) / ((now - lastTime) / 1000)),
                 time;
             if (charging) {
-                time = Math.round((1 - level) / step / 60);
-                statusText += '约' + time + '分钟充满';
+                time = isFinite(chargingTime) ?
+                    chargingTime / 60 :
+                    (1 - level) / step / 60;
+                statusText += '约' + Math.round(time) + '分钟充满';
             } else {
-                time = Math.round(level / step / 60);
-                statusText += '约' + time + '分钟用完';
+                time = isFinite(dischargingTime) && dischargingTime > 0 ?
+                    dischargingTime / 60 :
+                    level / step / 60;
+                statusText += '约' + Math.round(time) + '分钟用完';
             }
         }
     }
