@@ -63,7 +63,7 @@ function updateCharging() {
                 step = Math.abs((level - lastLevel) / ((now - lastTime) / 1000)),
                 time;
             if (charging) {
-                time = isFinite(chargingTime) ?
+                time = isFinite(chargingTime) && chargingTime > 0 ?
                     chargingTime / 60 :
                     (1 - level) / step / 60;
                 statusText += '约' + Math.round(time) + '分钟充满';
