@@ -7,17 +7,6 @@ var $body = $(document.body),
     $level = $('.level'),
     $status = $('.status');
 
-/* 转屏处理 */
-function onResize(event) {
-    var screen = window.screen,
-        width = screen.availWidth,
-        height = screen.availHeight,
-        rotate = width > height;
-    $body.toggleClass('rotate', rotate);
-}
-window.addEventListener('resize', onResize);
-onResize();
-
 /* 电池指示器 */
 var capacityMinY = 78,
     capacityMaxY = 378;

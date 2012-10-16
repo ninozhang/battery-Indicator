@@ -63,20 +63,24 @@ body {
     z-index: 1;
 }
 
-.rotate .indicator {
-    /*-webkit-transform: rotate(0.5turn);*/
-    top: 0;
-    -webkit-transform: rotate(-90deg);
-    -webkit-transform-origin: 54% 34%;
+@media only screen and (orientation:portrait) {
+
 }
-.rotate .level, .rotate .status {
-    max-width: 120px;
-}
-.rotate .level {
-    top: 130px;
-    left: 230px;
-}
-.rotate .status {
-    top: 162px;
-    left: 230px;
+@media only screen and (orientation:landscape) {
+    .indicator {
+        top: 0;
+        -webkit-transform: rotate(-90deg);
+        -webkit-transform-origin: 54% 34%;
+    }
+    .level, .rotate .status {
+        max-width: 120px;
+    }
+    .level {
+        top: 130px;
+        left: 230px;
+    }
+    .status {
+        top: 162px;
+        left: 230px;
+    }
 }
